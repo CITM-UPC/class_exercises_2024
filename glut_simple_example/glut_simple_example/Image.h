@@ -1,17 +1,20 @@
 #pragma once
 
+#include <ostream>
+#include <istream>
+
 class Image {
 
 	unsigned int _id = 0;
-	int _width = 0;
-	int _height = 0;
-	int _channels = 0;
+	unsigned short _width = 0;
+	unsigned short _height = 0;
+	unsigned char _channels = 0;
 
 public:
 	unsigned int id() const { return _id; }
-	int width() const { return _width; }
-	int height() const { return _height; }
-	int channels() const { return _channels; }
+	auto width() const { return _width; }
+	auto height() const { return _height; }
+	auto channels() const { return _channels; }
 
 	Image() = default;
 	Image(const Image&) = delete;
@@ -23,3 +26,8 @@ public:
 	void bind() const;
 	void load(int width, int height, int channels, void* data);
 };
+
+std::ostream& operator<<(std::ostream& os, const Image& img);
+std::istream& operator>>(std::istream& is, Image& img);
+
+

@@ -3,7 +3,7 @@
 
 void GraphicObject::draw() const {
 	glPushMatrix();
-	glMultMatrixd(&_transform.mat()[0][0]);
+	glMultMatrixd(_transform.data());
 	glColor3ubv(&_color.r);
 
 	if (hasTexture()) {
@@ -14,7 +14,9 @@ void GraphicObject::draw() const {
 	if (hasMesh()) _mesh_ptr->draw();
 	
 	if (hasTexture()) glDisable(GL_TEXTURE_2D);
-	
+
+	for (const auto& child : children()) child.draw();
+
 	glPopMatrix();
 }
 

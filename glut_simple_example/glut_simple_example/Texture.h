@@ -6,8 +6,6 @@
 class Texture
 {
 public:
-	using ImagePtr = std::shared_ptr<Image>;
-
 	enum WrapModes { Repeat, MirroredRepeat, Clamp };
 	WrapModes wrapMode = Repeat;
 

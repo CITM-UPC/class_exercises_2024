@@ -65,5 +65,11 @@
     <ClInclude Include="GraphicObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TreeExt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="readOnlyView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

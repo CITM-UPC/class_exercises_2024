@@ -2,11 +2,13 @@
 
 #include <memory>
 #include <glm/glm.hpp>
+#include "TreeExt.h"
 #include "Transform.h"
 #include "Texture.h"
 #include "Mesh.h"
 
-class GraphicObject {
+
+class GraphicObject :  public TreeExt<GraphicObject> {
 	
 	Transform _transform;
 	glm::u8vec3 _color = glm::u8vec3(255,255,255);
