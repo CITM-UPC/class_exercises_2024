@@ -13,6 +13,21 @@ using namespace std;
 static Camera camera;
 static GraphicObject scene;
 
+static void drawAxis(double size) {
+	glLineWidth(2.0);
+	glBegin(GL_LINES);
+	glColor3ub(255, 0, 0);
+	glVertex3d(0, 0, 0);
+	glVertex3d(size, 0, 0);
+	glColor3ub(0, 255, 0);
+	glVertex3d(0, 0, 0);
+	glVertex3d(0, size, 0);
+	glColor3ub(0, 0, 255);
+	glVertex3d(0, 0, 0);
+	glVertex3d(0, 0, size);
+	glEnd();
+}
+
 static auto MakeTriangleMesh(double size) {
 	const glm::vec3 vertices[] = { glm::vec3(-size, -size, 0), glm::vec3(size, -size, 0), glm::vec3(0, size, 0) };
 	const unsigned int indices[] = { 0, 1, 2 };
@@ -79,6 +94,14 @@ static void drawFloorGrid(int size, double step) {
 	glEnd();
 }
 
+static void drawAxisForGraphicObject(const GraphicObject& obj) {
+	glPushMatrix();
+	glMultMatrixd(obj.transform().data());
+	drawAxis(0.5);
+	for (const auto& child : obj.children()) drawAxisForGraphicObject(child);
+	glPopMatrix();
+}
+
 static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -87,6 +110,9 @@ static void display_func() {
 
 	drawFloorGrid(16, 0.25);
 	scene.draw();
+
+	drawAxisForGraphicObject(scene);
+
 	glutSwapBuffers();
 }
 
@@ -95,10 +121,7 @@ static void init_opengl() {
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-
-	glEnable(GL_POLYGON_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POINT_SMOOTH);
 
@@ -106,6 +129,7 @@ static void init_opengl() {
 	glEnable(GL_BLEND);
 
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 
 	glClearColor(0.5, 0.5, 0.5, 1.0);
 }
