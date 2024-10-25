@@ -5,6 +5,7 @@
 #include "TreeExt.h"
 #include "Transform.h"
 #include "Texture.h"
+#include "BoundingBox.h"
 #include "Mesh.h"
 
 
@@ -24,6 +25,9 @@ public:
 	auto& texture() { return _texture; }
 	const auto& mesh() const { return *_mesh_ptr; }
 	auto& mesh() { return *_mesh_ptr; }
+
+	BoundingBox boundingBox() const;
+	BoundingBox localBoundingBox() const { return _mesh_ptr ? _mesh_ptr->boundingBox() : BoundingBox(); }
 
 	void setTextureImage(const std::shared_ptr<Image>& img_ptr) { _texture.setImage(img_ptr); }
 	void setMesh(const std::shared_ptr<Mesh>& mesh_ptr) { _mesh_ptr = mesh_ptr; }

@@ -28,6 +28,27 @@ static void drawAxis(double size) {
 	glEnd();
 }
 
+inline static void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
+static void drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3) {
+	glBegin(GL_LINE_LOOP);
+	glVertex3(v0);
+	glVertex3(v1);
+	glVertex3(v2);
+	glVertex3(v3);
+	glEnd();
+}
+
+static void drawBoundingBox(const BoundingBox& bbox) {
+	glLineWidth(2.0);
+	drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v011(), bbox.v010());
+	drawWiredQuad(bbox.v100(), bbox.v101(), bbox.v111(), bbox.v110());
+	drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v101(), bbox.v100());
+	drawWiredQuad(bbox.v010(), bbox.v011(), bbox.v111(), bbox.v110());
+	drawWiredQuad(bbox.v000(), bbox.v010(), bbox.v110(), bbox.v100());
+	drawWiredQuad(bbox.v001(), bbox.v011(), bbox.v111(), bbox.v101());
+
+}
+
 static auto MakeTriangleMesh(double size) {
 	const glm::vec3 vertices[] = { glm::vec3(-size, -size, 0), glm::vec3(size, -size, 0), glm::vec3(0, size, 0) };
 	const unsigned int indices[] = { 0, 1, 2 };
@@ -94,11 +115,15 @@ static void drawFloorGrid(int size, double step) {
 	glEnd();
 }
 
-static void drawAxisForGraphicObject(const GraphicObject& obj) {
+static void drawDebugInfoForGraphicObject(const GraphicObject& obj) {
 	glPushMatrix();
+	glColor3ub(255, 255, 0);
+	drawBoundingBox(obj.boundingBox());
 	glMultMatrixd(obj.transform().data());
 	drawAxis(0.5);
-	for (const auto& child : obj.children()) drawAxisForGraphicObject(child);
+	glColor3ub(0, 255, 255);
+	drawBoundingBox(obj.localBoundingBox());
+	for (const auto& child : obj.children()) drawDebugInfoForGraphicObject(child);
 	glPopMatrix();
 }
 
@@ -111,7 +136,10 @@ static void display_func() {
 	drawFloorGrid(16, 0.25);
 	scene.draw();
 
-	drawAxisForGraphicObject(scene);
+	glColor3ub(255, 255, 255);
+	drawBoundingBox(scene.children().front().boundingBox());
+
+	//drawDebugInfoForGraphicObject(scene);
 
 	glutSwapBuffers();
 }
@@ -147,9 +175,9 @@ static void mouseWheel_func(int wheel, int direction, int x, int y) {
 
 static void idle_func() {
 	//animate triangles
-	scene.children().front().transform().rotate(0.001, vec3(0, 0, 1));
-	scene.children().front().children().front().transform().rotate(0.001, vec3(0, 0, 1));
-	scene.children().front().children().front().children().front().transform().rotate(0.001, vec3(0, 0, 1));
+	scene.children().front().transform().rotate(0.0001, vec3(0, 0, 1));
+	scene.children().front().children().front().transform().rotate(0.0001, vec3(0, 0, 1));
+	scene.children().front().children().front().children().front().transform().rotate(0.0001, vec3(0, 0, 1));
 
 	glutPostRedisplay();
 }

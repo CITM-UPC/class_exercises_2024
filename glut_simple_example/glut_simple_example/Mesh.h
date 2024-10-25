@@ -3,6 +3,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "BufferObject.h"
+#include "BoundingBox.h"
 
 class Mesh {
 
@@ -15,9 +16,12 @@ class Mesh {
 	std::vector<glm::vec3> _vertices;
 	std::vector<unsigned int> _indices;
 
+	BoundingBox _boundingBox;
+
 public:
 	const auto& vertices() const { return _vertices; }
 	const auto& indices() const { return _indices; }
+	const auto& boundingBox() const { return _boundingBox; }
 
 	void load(const glm::vec3* verts, size_t num_verts, const unsigned int* indexs, size_t num_indexs);
 	void loadTexCoords(const glm::vec2* texCoords);

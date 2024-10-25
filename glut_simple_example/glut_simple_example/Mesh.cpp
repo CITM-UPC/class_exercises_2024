@@ -9,6 +9,14 @@ void Mesh::load(const glm::vec3* verts, size_t num_verts, const unsigned int* in
 	_texCoordBuffer.unload();
 	_normalBuffer.unload();
 	_colorBuffer.unload();
+
+	_boundingBox.min = _vertices.front();
+	_boundingBox.max = _vertices.front();
+
+	for (const auto& v : _vertices) {
+		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v));
+		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v));
+	}
 }
 
 void Mesh::loadTexCoords(const glm::vec2* texCoords) {
