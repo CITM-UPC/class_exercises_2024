@@ -20,10 +20,17 @@ void GraphicObject::draw() const {
 	glPopMatrix();
 }
 
+BoundingBox GraphicObject::localBoundingBox() const {
+	if (children().size()) {
+		BoundingBox bbox = _mesh_ptr ? _mesh_ptr->boundingBox() : children().front().boundingBox();
+		for (const auto& child : children()) bbox = bbox + child.boundingBox();
+		return bbox;
+	}
+	else return _mesh_ptr ? _mesh_ptr->boundingBox() : BoundingBox();
+}
+
+
 BoundingBox GraphicObject::boundingBox() const {
-	BoundingBox bbox = localBoundingBox();
-	if(!_mesh_ptr && children().size()) bbox = children().front().boundingBox();
-	for (const auto& child : children()) bbox = bbox + child.boundingBox();
-	return _transform.mat() * bbox;
+	return _transform.mat() * localBoundingBox();
 }
 

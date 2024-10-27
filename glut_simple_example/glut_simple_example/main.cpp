@@ -137,9 +137,7 @@ static void display_func() {
 	scene.draw();
 
 	glColor3ub(255, 255, 255);
-	drawBoundingBox(scene.children().front().boundingBox());
-
-	//drawDebugInfoForGraphicObject(scene);
+	drawDebugInfoForGraphicObject(scene);
 
 	glutSwapBuffers();
 }
