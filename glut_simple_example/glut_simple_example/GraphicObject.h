@@ -26,8 +26,12 @@ public:
 	const auto& mesh() const { return *_mesh_ptr; }
 	auto& mesh() { return *_mesh_ptr; }
 
+	Transform worldTransform() const { return isRoot() ? _transform : parent().worldTransform() * _transform; }
+
 	BoundingBox localBoundingBox() const;
-	BoundingBox boundingBox() const;
+	BoundingBox boundingBox() const { return _transform.mat() * localBoundingBox(); }
+
+	BoundingBox worldBoundingBox() const;
 
 	void setTextureImage(const std::shared_ptr<Image>& img_ptr) { _texture.setImage(img_ptr); }
 	void setMesh(const std::shared_ptr<Mesh>& mesh_ptr) { _mesh_ptr = mesh_ptr; }

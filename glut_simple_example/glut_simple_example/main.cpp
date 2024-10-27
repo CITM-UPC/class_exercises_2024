@@ -123,8 +123,18 @@ static void drawDebugInfoForGraphicObject(const GraphicObject& obj) {
 	drawAxis(0.5);
 	glColor3ub(0, 255, 255);
 	drawBoundingBox(obj.localBoundingBox());
+
+	glColor3ub(255, 0, 0);
+	if(obj.hasMesh()) drawBoundingBox(obj.mesh().boundingBox());
+
 	for (const auto& child : obj.children()) drawDebugInfoForGraphicObject(child);
 	glPopMatrix();
+}
+
+static void drawWorldDebugInfoForGraphicObject(const GraphicObject& obj) {
+	glColor3ub(255, 255, 255);
+	drawBoundingBox(obj.worldBoundingBox());
+	for (const auto& child : obj.children()) drawWorldDebugInfoForGraphicObject(child);
 }
 
 static void display_func() {
@@ -138,6 +148,7 @@ static void display_func() {
 
 	glColor3ub(255, 255, 255);
 	drawDebugInfoForGraphicObject(scene);
+	drawWorldDebugInfoForGraphicObject(scene);
 
 	glutSwapBuffers();
 }

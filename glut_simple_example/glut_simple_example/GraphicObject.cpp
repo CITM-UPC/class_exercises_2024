@@ -29,8 +29,8 @@ BoundingBox GraphicObject::localBoundingBox() const {
 	else return _mesh_ptr ? _mesh_ptr->boundingBox() : BoundingBox();
 }
 
-
-BoundingBox GraphicObject::boundingBox() const {
-	return _transform.mat() * localBoundingBox();
+BoundingBox GraphicObject::worldBoundingBox() const {
+	BoundingBox bbox = worldTransform().mat() * (_mesh_ptr ? _mesh_ptr->boundingBox() : BoundingBox());
+	for (const auto& child : children()) bbox = bbox + child.worldBoundingBox();
+	return bbox;
 }
-
