@@ -7,9 +7,9 @@
 #include "Texture.h"
 #include "Mesh.h"
 #include "GraphicObject.h"
-
 using namespace std;
 
+static bool paused = true;
 static Camera camera;
 static GraphicObject scene;
 
@@ -183,12 +183,37 @@ static void mouseWheel_func(int wheel, int direction, int x, int y) {
 }
 
 static void idle_func() {
-	//animate triangles
-	scene.children().front().transform().rotate(0.0001, vec3(0, 0, 1));
-	scene.children().front().children().front().transform().rotate(0.0001, vec3(0, 0, 1));
-	scene.children().front().children().front().children().front().transform().rotate(0.0001, vec3(0, 0, 1));
-
+	if (!paused) {
+		//animate triangles
+		scene.children().front().transform().rotate(0.0001, vec3(0, 0, 1));
+		scene.children().front().children().front().transform().rotate(0.0001, vec3(0, 0, 1));
+		scene.children().front().children().front().children().front().transform().rotate(0.0001, vec3(0, 0, 1));
+	}
 	glutPostRedisplay();
+}
+
+static void initScene() {
+	auto& triangle = scene.emplaceChild();
+	triangle.transform().pos() = vec3(0, 0, 0);
+	triangle.color() = glm::u8vec3(255, 0, 0);
+
+	auto& child_textured_triangle = triangle.emplaceChild();
+	child_textured_triangle.transform().pos() = vec3(2, 0, 0);
+	child_textured_triangle.color() = glm::u8vec3(0, 255, 0);
+
+	auto& child_textured_quad = child_textured_triangle.emplaceChild();
+	child_textured_quad.transform().pos() = vec3(2, 0, 0);
+	child_textured_quad.color() = glm::u8vec3(0, 0, 255);
+
+	auto triangle_mesh = MakeTriangleMesh(0.5);
+	auto quad_mesh = MakeQuadMesh(0.5);
+	auto chess_texture_image = MakeChessTextureImage(64, 64, 8);
+
+	triangle.setMesh(triangle_mesh);
+	child_textured_triangle.setMesh(triangle_mesh);
+	child_textured_triangle.setTextureImage(chess_texture_image);
+	child_textured_quad.setMesh(quad_mesh);
+	child_textured_quad.setTextureImage(chess_texture_image);
 }
 
 int main(int argc, char* argv[]) {
@@ -206,33 +231,14 @@ int main(int argc, char* argv[]) {
 	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
 
 	// Init scene
-	auto& triangle = scene.emplaceChild();
-	triangle.transform().pos() = vec3(0, 0, 0);
-	triangle.color() = glm::u8vec3(255, 0, 0);
-
-	auto& child_textured_triangle = triangle.emplaceChild();
-	child_textured_triangle.transform().pos() = vec3(2, 0, 0);
-	child_textured_triangle.color() = glm::u8vec3(0, 255, 0);
-
-	auto& child_textured_quad = child_textured_triangle.emplaceChild();
-	child_textured_quad.transform().pos() = vec3( 2, 0, 0);
-	child_textured_quad.color() = glm::u8vec3(0, 0, 255);
-
-	auto triangle_mesh = MakeTriangleMesh(0.5);
-	auto quad_mesh = MakeQuadMesh(0.5);
-	auto chess_texture_image = MakeChessTextureImage(64, 64, 8);
-
-	triangle.setMesh(triangle_mesh);
-	child_textured_triangle.setMesh(triangle_mesh);
-	child_textured_triangle.setTextureImage(chess_texture_image);
-	child_textured_quad.setMesh(quad_mesh);
-	child_textured_quad.setTextureImage(chess_texture_image);
+	initScene();
 
 	// Set Glut callbacks
 	glutDisplayFunc(display_func);
 	glutIdleFunc(idle_func);
 	glutReshapeFunc(reshape_func);
 	glutMouseWheelFunc(mouseWheel_func);
+	glutKeyboardFunc([](unsigned char key, int x, int y) { paused = !paused; });
 
 	// Enter glut main loop
 	glutMainLoop();
