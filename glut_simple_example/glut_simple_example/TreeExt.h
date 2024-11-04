@@ -49,9 +49,9 @@ public:
 
 	template <typename ...Args>
 	auto& emplaceChild(Args&&... args) {
-		_children.emplace_back(std::forward<Args>(args)...);
-		_children.back()._parent = static_cast<T*>(this);
-		return _children.back();
+		auto& child = _children.emplace_back(std::forward<Args>(args)...);
+		child._parent = static_cast<T*>(this);
+		return child;
 	}
 
 	void removeChild(const T& child) { return _children.remove(std::forward(child)); }
