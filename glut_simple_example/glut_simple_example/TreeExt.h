@@ -1,7 +1,7 @@
 #pragma once
 
 #include <list>
-#include "readOnlyView.h"
+#include <ranges>
 
 template <class T>
 class TreeExt {
@@ -10,12 +10,21 @@ private:
 	T* _parent = nullptr;
 	std::list<T> _children;
 
-public:
-	auto& parent() const { return *_parent; }
-	auto children() const { return readOnlyListView<T>(_children); }
+	std::list<T*> allItemsPtrs() const {
+		std::list<T*> items{ static_cast<T*>(const_cast<TreeExt*>(this)) };
+		for (const auto& child : _children) items.splice(items.end(), child.allItemsPtrs());
+		return items;
+	}
 
-	auto& root() const { return _parent ? _parent->root() : *this; }
-	bool isRoot() const { return !_parent; }
+public:
+	bool hasParent() const { return _parent != nullptr; }
+	auto& parent() const { return *_parent; }
+	auto children() const { return const_cast<std::list<T>&>(_children) | std::views::all; }
+	auto allItems() const { return allItemsPtrs() | std::views::transform([](T* ptr) -> T& {return *ptr; }); }
+
+	bool isRoot() const { return !hasParent(); }
+	auto& root() const { return hasParent() ? parent().root() : *this; }
+	
 
 	TreeExt() = default;
 
