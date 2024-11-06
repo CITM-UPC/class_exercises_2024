@@ -27,7 +27,6 @@ public:
 	Transform() = default;
 	Transform(const mat4& mat) : _mat(mat) {}
 
-
 	void translate(const vec3& v);
 	void rotate(double rads, const vec3& v);
 
