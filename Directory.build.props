@@ -1,4 +1,5 @@
 <Project>
+  <!-- vcpkg -->
   <PropertyGroup>
     <VcpkgRoot>$(MSBuildThisFileDirectory)vcpkg</VcpkgRoot>
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
@@ -6,4 +7,13 @@
     <VcpkgManifestRoot>$(MSBuildThisFileDirectory)</VcpkgManifestRoot>
   </PropertyGroup>
   <Import Project="$(MSBuildThisFileDirectory)vcpkg\scripts\buildsystems\msbuild\vcpkg.props" />
+
+  <!-- shared properties -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)class_exercises_2024_lib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  
 </Project>
