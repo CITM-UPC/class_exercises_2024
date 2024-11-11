@@ -1,12 +1,8 @@
 <Project>
-  
-  <Target Name="VcPkgBootstrap" BeforeTargets="BeforeBuild" Condition="!Exists('$(MSBuildThisFileDirectory)vcpkg\vcpkg.exe')">
+
+  <Target Name="VcPkgBootstrap" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildThisFileDirectory)vcpkg\vcpkg.exe')">
     <Message Text="Bootstraping vcpkg" Importance="high" />
     <Exec Command="$(MSBuildThisFileDirectory)vcpkg\bootstrap-vcpkg.bat" />
-  </Target>
-
-  <Target Name="VcPkgClean" AfterTargets="Clean" Condition="Exists('$(MSBuildThisFileDirectory)vcpkg\vcpkg.exe')">
-    <Delete Files="$(MSBuildThisFileDirectory)vcpkg\vcpkg.exe" />
   </Target>
 
   <Import Project="$(MSBuildThisFileDirectory)vcpkg\scripts\buildsystems\msbuild\vcpkg.targets" />
