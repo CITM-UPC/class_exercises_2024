@@ -12,7 +12,6 @@
 #include "Mesh.h"
 #include "GraphicObject.h"
 #include "PreFabsFactory.h"
-#include "intersect.h"
 #include "debugDraws.h"
 using namespace std;
 
