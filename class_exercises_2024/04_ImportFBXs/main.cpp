@@ -88,7 +88,7 @@ static void idle_func() {
 
 static void initScene() {
 
-	scene = ModelImporter::loadFromFile("aSSETS/street2.fbx");
+	scene = ModelImporter::loadFromFile("../Assets/street2.fbx");
 	
 }
 

@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
 
 	//init texture
-	auto texImage = ImageImporter::loadFromFile("Assets/Lenna.png");
+	auto texImage = ImageImporter::loadFromFile("../Assets/Lenna.png");
 	texture.setImage(texImage);
 
 	// Set Glut callbacks

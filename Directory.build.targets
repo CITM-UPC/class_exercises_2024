@@ -1,6 +1,7 @@
 <Project>
   
-  <Target Name="VcPkgBootstrap" BeforeTargets="ClCompile" Condition="!Exists('$(MSBuildThisFileDirectory)vcpkg\vcpkg.exe')">
+  <Target Name="VcPkgBootstrap" BeforeTargets="BeforeBuild" Condition="!Exists('$(MSBuildThisFileDirectory)vcpkg\vcpkg.exe')">
+    <Message Text="Bootstraping vcpkg" Importance="high" />
     <Exec Command="$(MSBuildThisFileDirectory)vcpkg\bootstrap-vcpkg.bat" />
   </Target>
 
