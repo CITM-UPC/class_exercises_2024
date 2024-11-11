@@ -78,7 +78,6 @@
     <ClCompile Include="GraphicObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageImporter.cpp" />
-    <ClCompile Include="intersect.cpp" />
     <ClCompile Include="Material.h" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ModelImporter.cpp" />
@@ -94,7 +93,6 @@
     <ClInclude Include="GraphicObject.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageImporter.h" />
-    <ClInclude Include="intersect.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="PreFabsFactory.h" />

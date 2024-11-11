@@ -41,9 +41,6 @@
     <ClCompile Include="ImageImporter.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="intersect.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="ModelImporter.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -86,9 +83,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="ImageImporter.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="intersect.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="ModelImporter.h">
