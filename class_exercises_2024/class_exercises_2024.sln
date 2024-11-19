@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\Directory.build.props = ..\Directory.build.props
 		..\Directory.build.targets = ..\Directory.build.targets
+		..\.github\workflows\msbuild.yml = ..\.github\workflows\msbuild.yml
 		..\vcpkg.json = ..\vcpkg.json
 	EndProjectSection
 EndProject
@@ -19,6 +20,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_TreeTransforms", "03_TreeTransforms\03_TreeTransforms.vcxproj", "{6FB4E9E6-A5C4-43A1-8E03-9773A4E7B9D2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_ImportFBXs", "04_ImportFBXs\04_ImportFBXs.vcxproj", "{0A1BFB4A-84FB-450C-9D92-847EF7EEB270}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "00_class_excercises_2024_lib_Tests", "00_class_excercises_2024_lib_Tests\00_class_excercises_2024_lib_Tests.vcxproj", "{51560113-2932-41E7-8D70-7F222111B425}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +71,14 @@ Global
 		{0A1BFB4A-84FB-450C-9D92-847EF7EEB270}.Release|x64.Build.0 = Release|x64
 		{0A1BFB4A-84FB-450C-9D92-847EF7EEB270}.Release|x86.ActiveCfg = Release|Win32
 		{0A1BFB4A-84FB-450C-9D92-847EF7EEB270}.Release|x86.Build.0 = Release|Win32
+		{51560113-2932-41E7-8D70-7F222111B425}.Debug|x64.ActiveCfg = Debug|x64
+		{51560113-2932-41E7-8D70-7F222111B425}.Debug|x64.Build.0 = Debug|x64
+		{51560113-2932-41E7-8D70-7F222111B425}.Debug|x86.ActiveCfg = Debug|Win32
+		{51560113-2932-41E7-8D70-7F222111B425}.Debug|x86.Build.0 = Debug|Win32
+		{51560113-2932-41E7-8D70-7F222111B425}.Release|x64.ActiveCfg = Release|x64
+		{51560113-2932-41E7-8D70-7F222111B425}.Release|x64.Build.0 = Release|x64
+		{51560113-2932-41E7-8D70-7F222111B425}.Release|x86.ActiveCfg = Release|Win32
+		{51560113-2932-41E7-8D70-7F222111B425}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
