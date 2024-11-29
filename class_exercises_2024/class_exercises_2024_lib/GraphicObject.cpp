@@ -61,13 +61,13 @@ pair<int,int> GraphicObject::cacheHits() {
 	return { cache_hits, cache_misses };
 }
 
-void GraphicObject::cleanCache() const {
+void GraphicObject::cleanDirtyCaches() const {
 	cache_hits = 0;
 	cache_misses = 0;
 	if (isDirty()) {
-		_cached_boundingBox.clean();
-		for (const auto& child : children()) child.cleanCache();
 		transform().clean();
+		_cached_boundingBox.clean();
+		for (const auto& child : children()) child.cleanDirtyCaches();
 	}
 }
 

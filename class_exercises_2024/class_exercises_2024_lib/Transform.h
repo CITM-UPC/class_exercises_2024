@@ -4,7 +4,7 @@
 
 class Transform {
 
-	mat4 _mat;
+	mat4 _mat{1.0};
 	mutable bool _dirty{ false };
 
 public:
@@ -17,8 +17,9 @@ public:
 	auto& pos() { _dirty = true;  return reinterpret_cast<vec3&>(_mat[3]); }
 	const auto* data() const { return &_mat[0][0]; }
 
-	Transform() : _mat(1.0) {}
-	Transform(const mat4& mat) : _mat(mat) {}
+	Transform() = default;
+	Transform(const mat4& m) : _mat(m) {}
+	Transform& operator=(const mat4& m) { _mat = m; _dirty = true; return *this; }
 
 	void translate(const vec3& v);
 	void rotate(double rads, const vec3& v);

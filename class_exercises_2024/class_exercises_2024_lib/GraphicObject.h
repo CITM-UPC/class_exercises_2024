@@ -60,7 +60,7 @@ public:
 	BoundingBox boundingBox() const { return transform().mat() * localBoundingBox(); }
 
 	void draw() const;
-	void cleanCache() const;
+	void cleanDirtyCaches() const;
 	static std::pair<int, int> cacheHits();
 
 	bool isDirty() const { for(const auto& child : children()) if (child.isDirty()) return true; return  transform().dirty(); }

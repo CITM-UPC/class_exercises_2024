@@ -30,13 +30,25 @@ static void display_func() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(&camera.view()[0][0]);
 
+	static unsigned int frames = 0;
+	static auto delta_time = 0.0s;
+	const auto t0 = hrclock::now();
+	scene.cleanDirtyCaches();
 	scene.draw();
-
 	//draw debug
 	drawFloorGrid(100, 1);
 	drawDebugInfoForGraphicObject(scene);
-
+	const auto t1 = hrclock::now();
 	glutSwapBuffers();
+
+	delta_time += t1 - t0;
+	if (delta_time >= 1s || (frames%120)==0) {
+		cout << "FPS: " << static_cast<double>(frames) / delta_time.count() << endl;
+		cout << "Cache Hits: " << GraphicObject::cacheHits().first << '/' << GraphicObject::cacheHits().second  << endl;
+		frames = 0;
+		delta_time = 0.0s;
+	}
+	frames++;
 }
 
 static void init_opengl() {
