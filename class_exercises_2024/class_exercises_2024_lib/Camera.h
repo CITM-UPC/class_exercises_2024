@@ -1,5 +1,7 @@
 #pragma once
 
+#include <list>
+#include "types.h"
 #include "Transform.h"
 
 class Camera {
@@ -18,7 +20,8 @@ public:
 	auto& transform() { return _transform; }
 	mat4 projection() const;
 	mat4 view() const;
-	
+	std::list<Plane> frustumPlanes() const;
+
 };
 
 
