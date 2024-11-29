@@ -50,6 +50,9 @@
     <ClCompile Include="debugDraws.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicComponents.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -92,6 +95,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="debugDraws.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicComponents.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PolyList.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Cache.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

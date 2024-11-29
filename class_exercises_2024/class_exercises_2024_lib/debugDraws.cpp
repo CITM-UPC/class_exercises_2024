@@ -1,4 +1,5 @@
 #include "debugDraws.h"
+#include "GraphicComponents.h"
 #include <GL/glew.h>
 
 inline static void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
@@ -60,7 +61,7 @@ void drawDebugInfoForGraphicObject(const GraphicObject& obj) {
 	drawBoundingBox(obj.localBoundingBox());
 
 	glColor3ub(255, 0, 0);
-	if (obj.hasMesh()) drawBoundingBox(obj.mesh().boundingBox());
+	if(obj.hasComponent<MeshComponent>()) drawBoundingBox(obj.getComponent<MeshComponent>().boundingBox());
 
 	for (const auto& child : obj.children()) drawDebugInfoForGraphicObject(child);
 	glPopMatrix();

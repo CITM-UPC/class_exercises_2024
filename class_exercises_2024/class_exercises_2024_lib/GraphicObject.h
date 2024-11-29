@@ -3,39 +3,65 @@
 #include <memory>
 #include <glm/glm.hpp>
 #include "TreeExt.h"
+#include "Cache.h"
 #include "Transform.h"
 #include "Texture.h"
 #include "Material.h"
 #include "BoundingBox.h"
-#include "Mesh.h"
+#include "PolyList.h"
 
 class GraphicObject :  public TreeExt<GraphicObject> {
-	
-	Transform _transform;
-	std::shared_ptr<Material> _material_ptr;
-	std::shared_ptr<Mesh> _mesh_ptr;
 
 public:
-	const auto& transform() const { return _transform; }
-	auto& transform() { return _transform; }
-	
-	const auto& material() const { return *_material_ptr; }
-	auto& material() { return *_material_ptr; }
-	void setDefaultMaterial() { _material_ptr = std::make_shared<Material>(); }
-	void setMaterial(const std::shared_ptr<Material>& material_ptr) { _material_ptr = material_ptr; }
-	bool hasMaterial() const { return _material_ptr != nullptr; }
+	class IComponent {
+	public:
+		virtual const std::string& name() const = 0;
+		virtual const GraphicObject& owner() const = 0;
+		virtual GraphicObject& owner() = 0;
+	};
 
-	const auto& mesh() const { return *_mesh_ptr; }
-	auto& mesh() { return *_mesh_ptr; }
-	void setMesh(const std::shared_ptr<Mesh>& mesh_ptr) { _mesh_ptr = mesh_ptr; }
-	bool hasMesh() const { return _mesh_ptr != nullptr; }
+	class IDrawable : public IComponent {
+	public:
+		virtual const BoundingBox& boundingBox() const = 0;
+		virtual void draw() const = 0;
+	};
 
-	Transform worldTransform() const { return isRoot() ? _transform : parent().worldTransform() * _transform; }
+private:
+	PolyList<IComponent> _components;
+	mutable Cache<BoundingBox> _cached_boundingBox;
 
-	BoundingBox localBoundingBox() const;
-	BoundingBox boundingBox() const { return _transform.mat() * localBoundingBox(); }
+public:
 
-	BoundingBox worldBoundingBox() const;
+	GraphicObject();
+	GraphicObject(const GraphicObject& other) = delete;
+	GraphicObject& operator=(const GraphicObject& other) = delete;
+	GraphicObject(GraphicObject&& other) = default;
+	GraphicObject& operator=(GraphicObject&& other) = default;
+	virtual ~GraphicObject() = default;
+
+	template <class TComponent>
+	TComponent& emplaceComponent() {  return _components.emplace<TComponent>(std::ref(*this)); }
+
+	template <class TComponent>
+	bool hasComponent() const { return _components.hasType<TComponent>(); }
+
+	template <class TComponent>
+	TComponent& getComponent() { return _components.oneOfType<TComponent>(); }
+
+	template <class TComponent>
+	const TComponent& getComponent() const { return _components.oneOfType<TComponent>(); }
+
+	const Transform& transform() const;
+	Transform& transform();
+
+	Transform worldTransform() const { return isRoot() ? transform() : parent().worldTransform() * transform(); }
+
+	const BoundingBox& localBoundingBox() const;
+	BoundingBox boundingBox() const { return transform().mat() * localBoundingBox(); }
 
 	void draw() const;
+	void cleanCache() const;
+	static std::pair<int, int> cacheHits();
+
+	bool isDirty() const { for(const auto& child : children()) if (child.isDirty()) return true; return  transform().dirty(); }
 };

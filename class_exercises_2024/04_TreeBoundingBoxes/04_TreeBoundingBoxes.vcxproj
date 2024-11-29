@@ -13,22 +13,21 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{10bb1e9c-d649-4d0e-ac92-41715d124f83}</ProjectGuid>
-    <RootNamespace>glutsimpleexample</RootNamespace>
+    <ProjectGuid>{b040181a-d9b9-4704-965e-9c075d3ea681}</ProjectGuid>
+    <RootNamespace>My04TreeBoundingBoxes</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>00_class_exercises_2024_lib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -71,39 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoundingBox.cpp" />
-    <ClCompile Include="BufferObject.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="debugDraws.cpp" />
-    <ClCompile Include="GraphicComponents.cpp" />
-    <ClCompile Include="GraphicObject.cpp" />
-    <ClCompile Include="Image.cpp" />
-    <ClCompile Include="ImageImporter.cpp" />
-    <ClCompile Include="Material.h" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="ModelImporter.cpp" />
-    <ClCompile Include="PreFabsFactory.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Transform.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BoundingBox.h" />
-    <ClInclude Include="BufferObject.h" />
-    <ClInclude Include="Cache.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="debugDraws.h" />
-    <ClInclude Include="GraphicComponents.h" />
-    <ClInclude Include="GraphicObject.h" />
-    <ClInclude Include="Image.h" />
-    <ClInclude Include="ImageImporter.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="ModelImporter.h" />
-    <ClInclude Include="PolyList.h" />
-    <ClInclude Include="PreFabsFactory.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="TreeExt.h" />
-    <ClInclude Include="types.h" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

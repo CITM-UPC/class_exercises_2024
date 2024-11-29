@@ -6,6 +6,7 @@
 #include <assimp/scene.h>
 #include <assimp/mesh.h>
 #include "ImageImporter.h"
+#include "GraphicComponents.h"
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -24,9 +25,10 @@ GraphicObject graphicObjectFromNode(const aiScene& scene, const aiNode& node, co
 		const auto meshIndex = node.mMeshes[i];
 		const auto materialIndex = scene.mMeshes[meshIndex]->mMaterialIndex;
 
-		auto& child = obj.emplaceChild();
-		child.setMesh(meshes[meshIndex]);
-		child.setMaterial(materials[materialIndex]);
+		auto& child = i==0 ? obj : obj.emplaceChild();
+		auto& meshComponent = child.emplaceComponent<MeshComponent>();
+		meshComponent.setMesh(meshes[meshIndex]);
+		meshComponent.setMaterial(materials[materialIndex]);
 	}
 
 	for (unsigned int i = 0; i < node.mNumChildren; ++i) obj.emplaceChild(graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials));
