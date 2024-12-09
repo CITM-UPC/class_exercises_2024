@@ -86,3 +86,8 @@ const BoundingBox& GraphicObject::localBoundingBox() const {
 	}
 	return _cached_boundingBox.value();
 }
+
+void GraphicObject::update(const chrono::duration<double>& dt) {
+	for (auto& behaviour : _components.allOfType<IBehaviour>()) behaviour.update(dt);
+	for (auto& child : children()) child.update(dt);
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <chrono>
 #include <glm/glm.hpp>
 #include "TreeExt.h"
 #include "Cache.h"
@@ -24,6 +25,11 @@ public:
 	public:
 		virtual const BoundingBox& boundingBox() const = 0;
 		virtual void draw() const = 0;
+	};
+
+	class IBehaviour : public IComponent {
+	public:
+		virtual void update(const std::chrono::duration<double>& dt) = 0;
 	};
 
 private:
@@ -59,6 +65,7 @@ public:
 	const BoundingBox& localBoundingBox() const;
 	BoundingBox boundingBox() const { return transform().mat() * localBoundingBox(); }
 
+	void update(const std::chrono::duration<double>& dt);
 	void draw() const;
 	void cleanDirtyCaches() const;
 	static std::pair<int, int> cacheHits();

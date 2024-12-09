@@ -6,15 +6,21 @@
 template <class T>
 class TreeExt {
 
+public:
+	using IDType = uintptr_t;
+
 private:
 	T* _parent{ nullptr };
 	std::list<T> _children;
 	std::ranges::ref_view<std::list<T>> _children_view{ _children };
 
 public:
+	IDType id() const { return reinterpret_cast<IDType>(this); }
+
 	bool hasParent() const { return _parent != nullptr; }
 	const auto& parent() const { return *_parent; }
 	auto& parent() { return *_parent; }
+	
 	const auto& children() const { return _children; }
 	const auto& children() { return _children_view; }
 
@@ -53,5 +59,17 @@ public:
 		return child;
 	}
 
-	void removeChild(const T& child) { return _children.remove(std::forward(child)); }
+	auto itr() { auto iter = _parent->_children.begin();  for ( ; iter != _parent->_children.end() && iter->id() != this->id(); ++iter); return iter; }
+	auto itr() const { auto iter = _parent->_children.cbegin();  for (;  iter != _parent->_children.cend() && iter->id() != this->id(); ++iter); return iter; }
+
+	auto removeChild(IDType child_id) { return _children.remove_if([child_id](const T& child) { return child.id() == child_id; }); }
+	auto removeChild(const T & child_to_remove) { return removeChild(child_to_remove.id()); }
+
+	auto moveTo(T& new_parent) {
+		auto iter = itr();
+		auto old_parent = _parent;
+		_parent = &new_parent;
+		return new_parent._children.splice(new_parent._children.end(), old_parent->_children, iter);
+	}
+	
 };
