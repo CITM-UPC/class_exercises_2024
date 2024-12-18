@@ -35,9 +35,6 @@
     <ClCompile Include="BoundingBox.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Material.h">
-      <Filter>Headers</Filter>
-    </ClCompile>
     <ClCompile Include="ImageImporter.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -104,6 +101,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Cache.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

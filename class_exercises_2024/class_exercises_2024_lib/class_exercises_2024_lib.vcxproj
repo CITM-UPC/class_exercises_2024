@@ -79,7 +79,7 @@
     <ClCompile Include="GraphicObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageImporter.cpp" />
-    <ClCompile Include="Material.h" />
+    <ClInclude Include="Material.h" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="PreFabsFactory.cpp" />
